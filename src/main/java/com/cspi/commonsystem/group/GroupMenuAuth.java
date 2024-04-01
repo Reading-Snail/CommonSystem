@@ -1,14 +1,15 @@
-package com.cspi.commonsystem;
+package com.cspi.commonsystem.group;
 
+import com.cspi.commonsystem.menu.Menu;
 import lombok.*;
 
 import javax.persistence.*;
 
+@Getter
+@Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Entity
 @Table(name = "GROUP_MENU_AUTH")
 public class GroupMenuAuth {
     @Id

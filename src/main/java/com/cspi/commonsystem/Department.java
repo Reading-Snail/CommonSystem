@@ -14,7 +14,7 @@ import java.util.List;
 public class Department {
     @Id
     @Column(name = "DEPARTMENT_ID", nullable = false)
-    private Long id;
+    private String id;
 
     @OneToMany(mappedBy = "department")
     private List<Employee> employee;

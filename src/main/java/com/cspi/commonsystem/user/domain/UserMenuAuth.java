@@ -1,5 +1,6 @@
-package com.cspi.commonsystem;
+package com.cspi.commonsystem.user.domain;
 
+import com.cspi.commonsystem.menu.Menu;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,28 +28,28 @@ public class UserMenuAuth {
     private Menu menu;
 
     @Column(name = "USE_YN", length = 1)
-    private String useYn;
+    private Character useYn;
 
     // CRUD
     @Column(name = "CREATE_YN", length = 1)
-    private String createYn;
+    private Character createYn;
     @Column(name = "READ_YN", length = 1)
-    private String readYn;
+    private Character readYn;
     @Column(name = "UPDATE_YN", length = 1)
-    private String updateYn;
+    private Character updateYn;
     @Column(name = "DELETE_YN", length = 1)
-    private String deleteYn;
+    private Character deleteYn;
     @Column(name = "EXCEL_YN", length = 1)
-    private String excelYn;
+    private Character excelYn;
     @Column(name = "REPORT_YN", length = 1)
-    private String reportYn;
+    private Character reportYn;
 
     // 옵션 기능
     @Column(name = "OPTION_1", length = 1)
-    private String option1;
+    private Character option1;
     @Column(name = "OPTION_2", length = 1)
-    private String option2;
+    private Character option2;
     @Column(name = "OPTION_3", length = 1)
-    private String option3;
+    private Character option3;
 
 }

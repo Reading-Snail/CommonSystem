@@ -1,5 +1,6 @@
-package com.cspi.commonsystem;
+package com.cspi.commonsystem.group;
 
+import com.cspi.commonsystem.user.domain.UserGroup;
 import lombok.*;
 
 import javax.persistence.*;

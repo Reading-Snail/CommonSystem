@@ -1,5 +1,6 @@
-package com.cspi.commonsystem;
+package com.cspi.commonsystem.menu;
 
+import com.cspi.commonsystem.group.GroupMenuAuth;
 import lombok.*;
 
 import javax.persistence.*;
