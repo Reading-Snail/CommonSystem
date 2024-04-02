@@ -1,6 +1,7 @@
 package com.cspi.commonsystem.user.domain;
 
 import com.cspi.commonsystem.Employee;
+import com.cspi.commonsystem.user.service.UserRepository;
 import lombok.*;
 
 import javax.persistence.*;
@@ -57,6 +58,7 @@ public class User {
     @Column(name = "COMPANY_ID")
     private String companyId;       // 소속 구분
 
+
     public void lockUser(){
         this.lockYn = 'Y';
     }
@@ -69,8 +71,12 @@ public class User {
         this.failAttempt = 0;
     }
 
+    /**
+     * 새로운 비밀번호를 prePasswords에 추가하고 prePasswords를 갱신
+     *
+     * @param newPassword
+     */
     public void changePassword(String newPassword) {
-        // 새로운 비밀번호를 postPasswords에 추가
        this.prePasswords = PrePasswords.builder()
                 .prePassword1(this.password)
                 .prePassword2(this.prePasswords.getPrePassword1())
@@ -89,23 +95,23 @@ public class User {
     public static class PrePasswords {
 
         @Builder.Default
-        @Column(name = "POST_PASSWORD_1", length = 1)
+        @Column(name = "POST_PASSWORD_1")
         private String prePassword1 = "";
 
         @Builder.Default
-        @Column(name = "POST_PASSWORD_2", length = 1)
+        @Column(name = "POST_PASSWORD_2")
         private String prePassword2 = "";
 
         @Builder.Default
-        @Column(name = "POST_PASSWORD_3", length = 1)
+        @Column(name = "POST_PASSWORD_3")
         private String prePassword3 = "";
 
         @Builder.Default
-        @Column(name = "POST_PASSWORD_4", length = 1)
+        @Column(name = "POST_PASSWORD_4")
         private String prePassword4 = "";
 
         @Builder.Default
-        @Column(name = "POST_PASSWORD_5", length = 1)
+        @Column(name = "POST_PASSWORD_5")
         private String prePassword5 = "";
 
     }

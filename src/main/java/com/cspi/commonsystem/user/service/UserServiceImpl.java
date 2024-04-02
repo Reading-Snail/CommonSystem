@@ -1,7 +1,6 @@
 package com.cspi.commonsystem.user.service;
 
-import com.cspi.commonsystem.exception.PasswordMismatchException;
-import com.cspi.commonsystem.user.dto.UserDto;
+import com.cspi.commonsystem.user.dto.UserDTO;
 import com.cspi.commonsystem.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -26,20 +25,14 @@ public class UserServiceImpl implements UserService {
      * @param userDto 생성될 사용자 정보를 담고 있는 DTO
      * @return
      */
-    public UserDto createUser(UserDto userDto){
+    public UserDTO createUser(UserDTO userDto){
         Optional<User> existUser = userRepository.findById(userDto.getId());
         if(existUser.isPresent()){
             throw new DuplicateKeyException("이미 존재하는 아이디 입니다.");
         }else{
             User newUser = userDto.toEntity();
-
-            //System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@" + newUser.getId());
-            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@" + newUser.getName());
-            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@" + newUser.getEmail());
-            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@" + newUser.getPassword());
-
             User saved = userRepository.save(newUser);
-            return modelMapper.map(saved, UserDto.class);
+            return modelMapper.map(saved, UserDTO.class);
         }
     }
     /**
@@ -48,30 +41,27 @@ public class UserServiceImpl implements UserService {
      * @param userDto 수정될 사용자 정보를 담고 있는 DTO
      * @return
      */
-    public UserDto editUser(UserDto userDto){
+    public UserDTO editUser(UserDTO userDto){
         verifyUserExist(userDto.getId());
         User editUser = userDto.toEntity();
         User editedUser = userRepository.save(editUser);
-        return modelMapper.map(editedUser, UserDto.class);
+        return modelMapper.map(editedUser, UserDTO.class);
     }
 
     @Override
-    public void changePassword(String userId, String password, String confirmPassword) {
-        matchConfirmPassword(password, confirmPassword);
+    public void changePassword(String userId, String password) {
+        if(userRepository.existsByIdAndNewPassword(userId, password)){
+            throw new DuplicateKeyException("이전에 사용한 비밀번호는 사용하실 수 없습니다.");
+        }
         User user = verifyUserExist(userId);
         user.changePassword(password);
         userRepository.save(user);
-    }
-    private void matchConfirmPassword(String password, String confirmPassword){
-        if(!password.equals(confirmPassword)) {
-            throw new PasswordMismatchException("비밀번호와 비밀번호확인이 일치하지 않습니다.");
-        }
     }
 
     /**
      * 사용자 계정을 잠그는 메서드
      *
-     * @param userId
+     * @param userId 사용자ID
      */
     public void lockUserIfFailAttemptExceedFive(String userId){
         User user = verifyUserExist(userId);

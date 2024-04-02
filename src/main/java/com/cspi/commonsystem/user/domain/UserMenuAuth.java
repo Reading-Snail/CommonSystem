@@ -1,6 +1,6 @@
 package com.cspi.commonsystem.user.domain;
 
-import com.cspi.commonsystem.menu.Menu;
+import com.cspi.commonsystem.menu.domain.Menu;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package com.cspi.commonsystem.group;
 
-import com.cspi.commonsystem.menu.Menu;
+import com.cspi.commonsystem.menu.domain.Menu;
 import lombok.*;
 
 import javax.persistence.*;

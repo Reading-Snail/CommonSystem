@@ -1,14 +1,14 @@
 package com.cspi.commonsystem.user.service;
 
-import com.cspi.commonsystem.user.dto.UserDto;
+import com.cspi.commonsystem.user.dto.UserDTO;
 
 public interface UserService {
 
-    UserDto createUser(UserDto userDto);
+    UserDTO createUser(UserDTO userDto);
 
-    UserDto editUser(UserDto userDto);
+    UserDTO editUser(UserDTO userDto);
 
-    void changePassword(String userId, String newPassword, String newPasswordCheck);
+    void changePassword(String userId, String newPassword);
 
     void lockUserIfFailAttemptExceedFive(String userId);
 

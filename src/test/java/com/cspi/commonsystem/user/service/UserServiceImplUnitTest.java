@@ -1,8 +1,7 @@
 package com.cspi.commonsystem.user.service;
 
-import com.cspi.commonsystem.exception.PasswordMismatchException;
 import com.cspi.commonsystem.user.domain.User;
-import com.cspi.commonsystem.user.dto.UserDto;
+import com.cspi.commonsystem.user.dto.UserDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class UserServiceImplUnitTest {
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @Autowired
     private UserRepository userRepository;
@@ -37,7 +36,7 @@ class UserServiceImplUnitTest {
                 .build();
         userRepository.save(user1);
 
-        UserDto userDto = UserDto.builder()
+        UserDTO userDto = UserDTO.builder()
                 .id("test1")
                 .name("홍길동2")
                 .email("abcd@gmail.com")
@@ -59,21 +58,21 @@ class UserServiceImplUnitTest {
                 .build();
         userRepository.save(user1);
 
-        UserDto userDto = UserDto.builder()
+        UserDTO userDto = UserDTO.builder()
                 .id("testNew")
                 .name("홍길동New")
                 .email("abcdNew@gmail.com")
                 .password("1234New")
                 .companyId("C123New")
                 .build();
-        UserDto createdUser = userService.createUser(userDto);
+        UserDTO createdUser = userService.createUser(userDto);
 
         // 객체의 필드를 비교하여 같은지 확인
         assertThat(createdUser, samePropertyValuesAs(userDto));
     }
     @Test
     void editUserWithOutExistingId() {
-        UserDto userDto = UserDto.builder()
+        UserDTO userDto = UserDTO.builder()
                 .id("test1")
                 .name("홍길동new")
                 .email("abcdNew@gmail.com")
@@ -83,7 +82,6 @@ class UserServiceImplUnitTest {
                 .build();
         assertThrows(NoSuchElementException.class, () -> userService.editUser(userDto));
     }
-
     @Test
     void editUserWithExistingId() {
         User oldUser = User.builder()
@@ -96,7 +94,7 @@ class UserServiceImplUnitTest {
                 .build();
         userRepository.save(oldUser);
 
-        UserDto newUserDto = UserDto.builder()
+        UserDTO newUserDTO = UserDTO.builder()
                 .id("test1")
                 .name("홍길동new")
                 .email("abcdNew@gmail.com")
@@ -105,34 +103,51 @@ class UserServiceImplUnitTest {
                 .companyId("C123New")
                 .build();
 
-        assertThat(userService.editUser(newUserDto), samePropertyValuesAs(newUserDto));
+        assertThat(userService.editUser(newUserDTO), samePropertyValuesAs(newUserDTO));
     }
-
     @Test
-    void changePasswordWhenFailAttemptFive() {
+    void changePassword_WhenNewPasswordIsProvided() {
         User user1 = User.builder()
                 .id("test1")
                 .name("홍길동1")
-                .password("1234")
+                .password("test")
                 .email("test1@gmail.com")
-                .failAttempt(5)
-                .prePasswords(User.PrePasswords.builder().build()
+                .prePasswords(User.PrePasswords.builder()
+                        .prePassword1("A2#h7Fg@")
+                        .prePassword2("tY5=K*3s")
+                        .prePassword3("d9Q^@4vR")
+                        .prePassword4("L0P&r@2E")
+                        .prePassword5("6jS@9hGt")
+                        .build()
                 )
                 .build();
         userRepository.save(user1);
-
-        userService.changePassword("test1","12345", "12345");
-
-
-        assertEquals(userRepository.findById("test1").get().getPassword(), "12345");
+        userService.changePassword("test1","Xy7@K2pQ");
+        assertEquals(userRepository.findById("test1").get().getPassword(), "Xy7@K2pQ");
     }
     @Test
-    void changePasswordWhenPasswordMissMatch() {
-        assertThrows(PasswordMismatchException.class,
-                () -> userService.changePassword("test1","12345", "1234"));
+    void changePassword_WhenNewPasswordIsDuplicated() {
+        User user1 = User.builder()
+                .id("test1")
+                .name("홍길동1")
+                .password("test")
+                .email("test1@gmail.com")
+                .prePasswords(User.PrePasswords.builder()
+                        .prePassword1("A2#h7Fg@")
+                        .prePassword2("tY5=K*3s")
+                        .prePassword3("d9Q^@4vR")
+                        .prePassword4("L0P&r@2E")
+                        .prePassword5("6jS@9hGt")
+                        .build()
+                )
+                .build();
+        userRepository.save(user1);
+        assertThrows(DuplicateKeyException.class,
+                () -> userService.changePassword("test1","A2#h7Fg@")
+        );
     }
     @Test
-    void lockUser_IfFailAttemptIsSix() {
+    void lockUser_WhenFailAttemptIsSix_ThenLockYnIsY() {
         User user = User.builder()
                 .id("test1")
                 .name("홍길동1")
@@ -146,9 +161,8 @@ class UserServiceImplUnitTest {
 
         assertEquals(userRepository.findById("test1").get().getLockYn(),'Y');
     }
-
     @Test
-    void lockUser_IfFailAttemptIsFive() {
+    void lockUser_WhenFailAttemptIsFive_ThenLockYnIsN() {
         User user = User.builder()
                 .id("test1")
                 .name("홍길동1")
@@ -162,8 +176,4 @@ class UserServiceImplUnitTest {
 
         assertEquals(userRepository.findById("test1").get().getLockYn(),'N');
     }
-
-//    @Test
-//    void unlockUser() {
-//    }
 }
