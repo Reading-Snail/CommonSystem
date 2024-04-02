@@ -79,9 +79,9 @@ public class Menu {
     @Column(name = "OPTION_3", nullable = false, length = 1)
     private Character option3 = 'N';
 
-    public void setParent(Menu parent) {
+    public void setParentAndAddToChildren(Menu parent) {
         this.parent = parent;
-        parent.getChildren().add(newNode);
+        parent.getChildren().add(this);
     }
 
 }

@@ -38,7 +38,7 @@ public class MenuServiceImpl implements MenuService {
                 Menu parent = parentOptional.get();
 
                 // 부모-자식 관계 설정
-                newNode.setParent(parent);
+                newNode.setParentAndAddToChildren(parent);
                 menuRepository.save(parent);
             } else {
                 // 부모 노드가 존재하지 않는 경우 처리
