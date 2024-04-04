@@ -2,6 +2,8 @@ package com.cspi.commonsystem.user.service;
 
 import com.cspi.commonsystem.user.dto.UserDTO;
 import com.cspi.commonsystem.user.domain.User;
+import com.cspi.commonsystem.user.repository.UserGroupRepository;
+import com.cspi.commonsystem.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.dao.DuplicateKeyException;
@@ -17,6 +19,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserGroupService userGroupService;
     private final ModelMapper modelMapper;
 
     /**
@@ -30,8 +33,12 @@ public class UserServiceImpl implements UserService {
         if(existUser.isPresent()){
             throw new DuplicateKeyException("이미 존재하는 아이디 입니다.");
         }else{
+            // 사용자를 생성
             User newUser = userDto.toEntity();
             User saved = userRepository.save(newUser);
+
+            // 생성된 사용자에 그룹정보 연결
+            userGroupService.linkUserWithGroups(saved.getId(), userDto.getGroupIds());
             return modelMapper.map(saved, UserDTO.class);
         }
     }

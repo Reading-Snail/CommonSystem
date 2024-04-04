@@ -1,4 +1,4 @@
-package com.cspi.commonsystem.group;
+package com.cspi.commonsystem.group.domain;
 
 import com.cspi.commonsystem.menu.domain.Menu;
 import lombok.*;

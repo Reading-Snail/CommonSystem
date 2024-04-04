@@ -1,4 +1,4 @@
-package com.cspi.commonsystem.user.service;
+package com.cspi.commonsystem.user.repository;
 
 import com.cspi.commonsystem.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -6,10 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
-public interface UserRepository extends JpaRepository<User, String> {
+public interface UserMenuAuthRepository extends JpaRepository<User, String> {
 
     /**
      * 사용자의 이전 비밀번호들을 조회하여 새로운 비밀번호와 중복되는지 확인

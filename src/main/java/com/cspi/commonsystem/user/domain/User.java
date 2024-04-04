@@ -1,18 +1,20 @@
 package com.cspi.commonsystem.user.domain;
 
 import com.cspi.commonsystem.Employee;
-import com.cspi.commonsystem.user.service.UserRepository;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Entity
+@Builder
+@DynamicInsert
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "USER_MASTER")
 public class User {
 
@@ -20,20 +22,20 @@ public class User {
     @Column(name = "USER_ID", nullable = false)
     private String id;              // id
 
+    @Column(name = "NAME")
+    private String name;            // 이름
+
+    @Column(name = "PASSWORD")
+    private String password;        // 비밀번호
+
+    @Column(name = "EMAIL")
+    private String email;           // 이메일
+
     @OneToMany(mappedBy = "user")
     private List<UserGroup> userGroupList;  // 사용자화면권한그룹
 
     @OneToMany(mappedBy = "user")
     private List<UserMenuAuth> userMenuAuthList;    // 사용자화면권한
-
-    @Column(name = "NAME")
-    private String name;            // 이름
-
-    @Column(name = "EMAIL")
-    private String email;           // 이메일
-
-    @Column(name = "PASSWORD")
-    private String password;        // 비밀번호
 
     @Embedded
     private PrePasswords prePasswords;    // 이전 비밀번호 5개 저장
@@ -41,9 +43,9 @@ public class User {
     @Column(name = "FAIL_ATTEMPT")
     private Integer failAttempt;    //로그인 오류 횟수
 
-    @Builder.Default
+    @ColumnDefault("'N'")
     @Column(name = "LOCK_YN", length = 1)
-    private Character lockYn = 'N';       // 계정 잠금 여부
+    private Character lockYn;       // 계정 잠금 여부
 
     @Column(name = "LATEST_LOGIN")
     private LocalDate latestLogin;  // 최종 로그인 일시

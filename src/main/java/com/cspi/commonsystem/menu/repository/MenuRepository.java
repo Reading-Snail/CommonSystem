@@ -9,6 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface MenuRepository extends JpaRepository<Menu, String> {
+public interface MenuRepository extends JpaRepository<Menu, Long> {
     List<Menu> findAllByParentIsNull();
 }

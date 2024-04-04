@@ -16,7 +16,7 @@ import javax.persistence.*;
 @Table(name = "USER_MENU_AUTH")
 public class UserMenuAuth {
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "USER_MENU_AUTH_ID", nullable = false)
     private Long id;
 
     @ManyToOne

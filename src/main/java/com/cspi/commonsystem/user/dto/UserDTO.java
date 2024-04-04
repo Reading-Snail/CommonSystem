@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * DTO for {@link User}
@@ -19,8 +20,9 @@ public class UserDTO {
 
     private String id;
     private String name;
-    private String email;
     private String password;
+    private String email;
+    private List<Long> GroupIds;
     private Integer failAttempt;
     private LocalDate latestLogin;
     private String departmentId;

@@ -1,6 +1,6 @@
 package com.cspi.commonsystem.user.domain;
 
-import com.cspi.commonsystem.group.Group;
+import com.cspi.commonsystem.group.domain.Group;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,4 +23,9 @@ public class UserGroup {
     @ManyToOne
     @JoinColumn(name = "GROUP_ID")
     private Group group;
+
+    public void setUserAndGroup(User user, Group group) {
+        this.user = user;
+        this.group = group;
+    }
 }

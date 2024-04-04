@@ -12,9 +12,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MenuTreeDTO {
-    private String id;
-    private String parentId;
-    private List<MenuTreeDTO> children;
+    private Long id;
+    private String code;
     private Long sortOrder;
     private String name;
     private Character type;
@@ -30,10 +29,13 @@ public class MenuTreeDTO {
     private Character option1;
     private Character option2;
     private Character option3;
+    private String parentId;
+    private List<MenuTreeDTO> children;
 
     public static MenuTreeDTO of(Menu menu) {
         return MenuTreeDTO.builder()
                 .id(menu.getId())
+//                .code(menu.getCode())
                 .name(menu.getName())
                 .children(menu.getChildren().stream().map(MenuTreeDTO::of).collect(Collectors.toList()))
                 .build();

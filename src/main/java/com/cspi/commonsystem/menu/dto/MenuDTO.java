@@ -14,27 +14,29 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MenuDTO {
-    private String id;
-    private String parentId;
+    private Long id;
+    private String code;
+    private Long parentId;
     private Long sortOrder;
     private String name;
     private Character type;
     private String programId;
     private String caller;
     private Character useYn;
-    private Character createYn = 'N';
-    private Character readYn = 'N';
-    private Character updateYn = 'N';
-    private Character deleteYn = 'N';
-    private Character excelYn = 'N';
-    private Character reportYn = 'N';
-    private Character option1 = 'N';
-    private Character option2 = 'N';
-    private Character option3 = 'N';
+    private Character createYn;
+    private Character readYn;
+    private Character updateYn;
+    private Character deleteYn;
+    private Character excelYn;
+    private Character reportYn;
+    private Character option1;
+    private Character option2;
+    private Character option3;
 
     public Menu toEntity() {
         return Menu.builder()
                     .id(this.id)
+//                    .code(this.code)
                     .sortOrder(this.sortOrder)
                     .name(this.name)
                     .type(this.type)

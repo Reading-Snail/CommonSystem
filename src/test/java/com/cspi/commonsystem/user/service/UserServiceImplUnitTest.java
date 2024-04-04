@@ -2,6 +2,7 @@ package com.cspi.commonsystem.user.service;
 
 import com.cspi.commonsystem.user.domain.User;
 import com.cspi.commonsystem.user.dto.UserDTO;
+import com.cspi.commonsystem.user.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
