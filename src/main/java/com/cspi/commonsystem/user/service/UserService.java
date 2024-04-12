@@ -1,12 +1,13 @@
 package com.cspi.commonsystem.user.service;
 
-import com.cspi.commonsystem.user.dto.UserDTO;
+import com.cspi.commonsystem.user.dto.UserReqDTO;
+import com.cspi.commonsystem.user.dto.UserRespDTO;
 
 public interface UserService {
 
-    UserDTO createUser(UserDTO userDto);
+    UserRespDTO createUser(UserReqDTO userReqDto);
 
-    UserDTO editUser(UserDTO userDto);
+    UserRespDTO editUser(UserReqDTO userReqDto);
 
     void changePassword(String userId, String newPassword);
 

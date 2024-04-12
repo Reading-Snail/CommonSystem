@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,13 +17,14 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class UserReqDTO {
 
     private String id;
     private String name;
     private String password;
     private String email;
-    private List<Long> GroupIds;
+    @Builder.Default
+    private List<Long> groupIds = new ArrayList<>();
     private Integer failAttempt;
     private LocalDate latestLogin;
     private String departmentId;
@@ -32,8 +34,8 @@ public class UserDTO {
         return User.builder()
                 .id(this.id)
                 .name(this.name)
-                .email(this.email)
                 .password(this.password)
+                .email(this.email)
                 .departmentId(this.departmentId)
                 .companyId(this.companyId)
                 .build();

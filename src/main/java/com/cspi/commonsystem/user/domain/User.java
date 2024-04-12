@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -31,11 +32,13 @@ public class User {
     @Column(name = "EMAIL")
     private String email;           // 이메일
 
+    @Builder.Default
     @OneToMany(mappedBy = "user")
-    private List<UserGroup> userGroupList;  // 사용자화면권한그룹
+    private List<UserGroup> userGroupList = new ArrayList<>();  // 사용자화면권한그룹
 
+    @Builder.Default
     @OneToMany(mappedBy = "user")
-    private List<UserMenuAuth> userMenuAuthList;    // 사용자화면권한
+    private List<UserMenuAuth> userMenuAuthList = new ArrayList<>();    // 사용자화면권한
 
     @Embedded
     private PrePasswords prePasswords;    // 이전 비밀번호 5개 저장
@@ -43,9 +46,10 @@ public class User {
     @Column(name = "FAIL_ATTEMPT")
     private Integer failAttempt;    //로그인 오류 횟수
 
+    @Builder.Default
     @ColumnDefault("'N'")
     @Column(name = "LOCK_YN", length = 1)
-    private Character lockYn;       // 계정 잠금 여부
+    private Character lockYn = 'N';       // 계정 잠금 여부
 
     @Column(name = "LATEST_LOGIN")
     private LocalDate latestLogin;  // 최종 로그인 일시

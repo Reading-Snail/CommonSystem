@@ -4,18 +4,15 @@ import com.cspi.commonsystem.group.domain.Group;
 import com.cspi.commonsystem.group.repository.GroupRepository;
 import com.cspi.commonsystem.user.domain.User;
 import com.cspi.commonsystem.user.domain.UserGroup;
-import com.cspi.commonsystem.user.dto.UserDTO;
 import com.cspi.commonsystem.user.repository.UserGroupRepository;
 import com.cspi.commonsystem.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -39,13 +36,13 @@ public class UserGroupServiceImpl implements UserGroupService {
 
         List<Group> groups = groupRepository.findAllById(groupIds);
 
-        // 이미 연결된 경우, 아무 작업도 수행하지 않음
+        // 기존 연결된 User-Group 초기화
+        userGroupRepository.deleteAllByUser(user);
+
+        // User-Group 관계 연결
         groups.forEach(group -> {
-            if (!userGroupRepository.existsByUserAndGroup(user, group)) {
-                UserGroup userGroup = new UserGroup();
-                userGroup.setUserAndGroup(user, group);
-                userGroupRepository.save(userGroup);
-            }
+            UserGroup userGroup = new UserGroup();
+            userGroup.setUserAndGroup(user, group);
         });
     }
 

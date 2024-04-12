@@ -12,4 +12,6 @@ import org.springframework.stereotype.Repository;
 public interface UserGroupRepository extends JpaRepository<UserGroup, Long> {
 
     boolean existsByUserAndGroup(User user, Group group);
+
+    void deleteAllByUser(User user);
 }

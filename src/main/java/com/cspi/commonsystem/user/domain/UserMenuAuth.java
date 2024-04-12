@@ -16,6 +16,8 @@ import javax.persistence.*;
 @Table(name = "USER_MENU_AUTH")
 public class UserMenuAuth {
     @Id
+    @SequenceGenerator(name = "user_menu_auth_seq_generator", sequenceName = "user_menu_auth_id_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_menu_auth_seq_generator")
     @Column(name = "USER_MENU_AUTH_ID", nullable = false)
     private Long id;
 
